@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magazine/page/page.dart';
-
-import 'page/home/home.dart';
+import 'bloc/bloc.dart';
 
 void main() {
   runApp(
@@ -21,15 +21,19 @@ class MyApp extends StatelessWidget {
       ),
       theme: ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Color(0xff0C222F),
-        appBarTheme:
-            AppBarTheme(backgroundColor: Color(0xff0C222F), elevation: 0),
+        scaffoldBackgroundColor: Color(0xffffffff),
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: SpalshScreen(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => SplashBloc()),
+          BlocProvider(create: (context) => OnboardingBloc()),
+        ],
+        child: SplashScreen(),
+      ),
     );
   }
 }
