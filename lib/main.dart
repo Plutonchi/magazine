@@ -2,10 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:magazine/page/page.dart';
 import 'bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
-    const MyApp(),
+    BlocProvider(
+      create: (context) => AuthenticationBloc(prefs),
+      child: MyApp(),
+    ),
   );
 }
 
@@ -31,8 +45,10 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => SplashBloc()),
           BlocProvider(create: (context) => OnboardingBloc()),
+          BlocProvider<PasswordVisibilityCubit>(
+              create: (context) => PasswordVisibilityCubit()),
         ],
-        child: SplashScreen(),
+        child: Login(),
       ),
     );
   }
