@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:magazine/page/auth/login/forgot_password.dart';
 import 'package:magazine/page/page.dart';
+import 'bloc/authentication/visibility/re_type_visibility.dart';
 import 'bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -47,8 +49,10 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => OnboardingBloc()),
           BlocProvider<PasswordVisibilityCubit>(
               create: (context) => PasswordVisibilityCubit()),
+          BlocProvider<ReTypeVisibilityCubit>(
+              create: (context) => ReTypeVisibilityCubit()),
         ],
-        child: Login(),
+        child: ForgotPassword(),
       ),
     );
   }

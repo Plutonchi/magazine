@@ -68,6 +68,7 @@ class _LoginState extends State<Login> {
         },
         builder: (context, state) {
           return SingleChildScrollView(
+            scrollDirection: Axis.vertical,
             child: Container(
               color: Color(0xFF121223),
               child: Column(
@@ -108,7 +109,7 @@ class _LoginState extends State<Login> {
                   ),
                   Container(
                     padding: const EdgeInsets.all(24),
-                    height: MediaQuery.of(context).size.height / 1.45,
+                    height: MediaQuery.of(context).size.height / 1.35,
                     // height: double.infinity,
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -220,22 +221,30 @@ class _LoginState extends State<Login> {
                         SizedBox(
                           height: 31,
                         ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(),
-                          child: Center(
-                            child: Text("Log In",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "SenRegular",
-                                  fontWeight: FontWeight.w600,
-                                )),
+                        SizedBox(
+                          height: 62,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(12), // <-- Radius
+                                ),
+                                backgroundColor: AppColors.colorF7),
+                            child: Center(
+                              child: Text("Log In",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: "SenRegular",
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                            ),
+                            // width: 327,
+                            // height: 62,
+                            // decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(12),
+                            //     color: AppColors.colorF7),
                           ),
-                          // width: 327,
-                          // height: 62,
-                          // decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(12),
-                          //     color: AppColors.colorF7),
                         ),
                         SizedBox(
                           height: 38,
@@ -251,7 +260,14 @@ class _LoginState extends State<Login> {
                                   fontWeight: FontWeight.w400,
                                 )),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SignInPage(),
+                                    ),
+                                  );
+                                },
                                 child: Text("Sign Up",
                                     style: TextStyle(
                                       fontSize: 16,
