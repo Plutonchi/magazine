@@ -5,16 +5,19 @@ class RegisterWidget extends StatelessWidget {
   final Widget? suffixIcon;
   final bool obscureText;
   final String? hintText;
+  void Function(String)? onChanged;
   RegisterWidget(
       {super.key,
       required this.controller,
       this.suffixIcon,
       this.obscureText = false,
+      this.onChanged,
       this.hintText});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       obscureText: obscureText,
       controller: controller,
       style: TextStyle(
