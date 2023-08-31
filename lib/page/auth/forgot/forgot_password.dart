@@ -16,27 +16,35 @@ class ForgotPassword extends StatelessWidget {
           children: [
             Center(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 45,
-                        height: 45,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              backgroundColor: Colors.white),
-                          onPressed: () {},
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.black,
-                          ),
+                  SizedBox(
+                    height: 60,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 24),
+                    padding: EdgeInsets.only(right: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.white,
+                    ),
+                    width: 50,
+                    height: 50,
+                    child: Center(
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Color(0xff5E616F),
+                          size: 18,
                         ),
                       ),
-                    ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24,
                   ),
                   Text(
                     'Forgot Password',

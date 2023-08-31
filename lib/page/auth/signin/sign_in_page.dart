@@ -4,8 +4,6 @@ import 'package:magazine/page/auth/widgets/register_widgets.dart';
 import 'package:magazine/utils/app_colors/app_color.dart';
 
 class SignInPage extends StatefulWidget {
-  SignInPage({Key? key}) : super(key: key);
-
   @override
   State<SignInPage> createState() => _SignInPageState();
 }
@@ -24,9 +22,35 @@ class _SignInPageState extends State<SignInPage> {
         child: Container(
           color: Color(0xFF121223),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: 120,
+                height: 60,
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 24),
+                padding: EdgeInsets.only(right: 2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
+                ),
+                width: 50,
+                height: 50,
+                child: Center(
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.arrow_back_ios_new,
+                      color: Color(0xff5E616F),
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 24,
               ),
               Padding(
                 padding: const EdgeInsets.all(24),
@@ -61,7 +85,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               Container(
                 padding: const EdgeInsets.all(24),
-                height: MediaQuery.of(context).size.height / 1.35,
+                height: MediaQuery.of(context).size.height / 1.5,
                 // height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -83,7 +107,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     RegisterWidget(
                       controller: _emailController,
-                      hintText: 'example@gmail.com',
+                      hintText: 'Jonh Doe',
                     ),
                     SizedBox(
                       height: 10,
@@ -92,14 +116,14 @@ class _SignInPageState extends State<SignInPage> {
                       text: "EMAIL",
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 8,
                     ),
                     RegisterWidget(
                       controller: _emailController,
                       hintText: 'example@gmail.com',
                     ),
                     SizedBox(
-                      height: 25,
+                      height: 24,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +132,7 @@ class _SignInPageState extends State<SignInPage> {
                           text: "PASSWORD",
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 8,
                         ),
                         RegisterWidget(
                           controller: _passwordController,
@@ -122,13 +146,13 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 24,
                         ),
                         RegisterTextWidgets(
                           text: "Re-Type Password",
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 8,
                         ),
                         RegisterWidget(
                           controller: _reTypePasswordController,
@@ -142,10 +166,7 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          height: 31,
+                          height: 47,
                         ),
                         SizedBox(
                           height: 62,
@@ -158,89 +179,14 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                                 backgroundColor: AppColors.colorF7),
                             child: Center(
-                              child: Text("Log In",
+                              child: Text("SING UP",
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     fontFamily: "SenRegular",
-                                    fontWeight: FontWeight.w600,
+                                    fontWeight: FontWeight.w700,
                                   )),
                             ),
-                            // width: 327,
-                            // height: 62,
-                            // decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(12),
-                            //     color: AppColors.colorF7),
                           ),
-                        ),
-                        SizedBox(
-                          height: 38,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Don’t have an account?",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontFamily: "SenRegular",
-                                  fontWeight: FontWeight.w400,
-                                )),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SignInPage(),
-                                    ),
-                                  );
-                                },
-                                child: Text("Sign Up",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.colorF7,
-                                      fontFamily: "SenRegular",
-                                      fontWeight: FontWeight.w700,
-                                    )))
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Center(
-                          child: RegisterTextWidgets(text: "Or"),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              maxRadius: 30,
-                              minRadius: 30,
-                              backgroundImage:
-                                  AssetImage("assets/images/facebook.png"),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            CircleAvatar(
-                              maxRadius: 30,
-                              minRadius: 30,
-                              backgroundImage:
-                                  AssetImage("assets/images/twitter.png"),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            CircleAvatar(
-                              maxRadius: 30,
-                              minRadius: 30,
-                              backgroundImage:
-                                  AssetImage("assets/images/apple.png"),
-                            ),
-                          ],
                         ),
                       ],
                     ),

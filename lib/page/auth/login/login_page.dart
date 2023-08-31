@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:magazine/page/auth/forgot/forgot_password.dart';
 import 'package:magazine/page/auth/widgets/register_text_widgets.dart';
 import 'package:magazine/page/auth/widgets/register_widgets.dart';
 import 'package:magazine/utils/app_colors/app_color.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../signin/sign_in_page.dart';
 
@@ -61,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 padding: const EdgeInsets.all(24),
-                height: MediaQuery.of(context).size.height / 1.35,
+                height: MediaQuery.of(context).size.height / 1.478,
                 // height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -150,7 +154,14 @@ class _LoginPageState extends State<LoginPage> {
                         Row(
                           children: [
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ForgotPassword(),
+                                  ),
+                                );
+                              },
                               child: Text(
                                 "Forgot Password",
                                 style: TextStyle(
@@ -194,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 38,
+                      height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -225,42 +236,52 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Center(
                       child: RegisterTextWidgets(text: "Or"),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 10,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircleAvatar(
-                          maxRadius: 30,
-                          minRadius: 30,
-                          backgroundImage:
-                              AssetImage("assets/images/facebook.png"),
+                        Container(
+                          width: 62,
+                          height: 62,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/svg/facebook.svg',
+                          ),
                         ),
                         SizedBox(
                           width: 30,
                         ),
-                        CircleAvatar(
-                          maxRadius: 30,
-                          minRadius: 30,
-                          backgroundImage:
-                              AssetImage("assets/images/twitter.png"),
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        CircleAvatar(
-                          maxRadius: 30,
-                          minRadius: 30,
-                          backgroundImage:
-                              AssetImage("assets/images/apple.png"),
-                        ),
+                        Platform.isIOS
+                            ? Container(
+                                width: 62,
+                                height: 62,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/svg/ios.svg',
+                                ),
+                              )
+                            : Container(
+                                width: 62,
+                                height: 62,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/svg/google.svg',
+                                ),
+                              ),
                       ],
                     ),
                   ],
