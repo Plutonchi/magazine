@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:magazine/page/auth/forgot/forgot_password.dart';
+import 'package:magazine/page/auth/location/location_access.dart';
 import 'package:magazine/page/auth/widgets/register_text_widgets.dart';
 import 'package:magazine/page/auth/widgets/register_widgets.dart';
 import 'package:magazine/utils/app_colors/app_color.dart';
@@ -182,7 +183,14 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(
                       height: 62,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LocationAccess(),
+                            ),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius:

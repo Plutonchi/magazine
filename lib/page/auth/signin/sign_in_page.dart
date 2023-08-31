@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:magazine/page/auth/location/location_access.dart';
 import 'package:magazine/page/auth/widgets/register_text_widgets.dart';
 import 'package:magazine/page/auth/widgets/register_widgets.dart';
 import 'package:magazine/utils/app_colors/app_color.dart';
@@ -171,7 +172,14 @@ class _SignInPageState extends State<SignInPage> {
                         SizedBox(
                           height: 62,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LocationAccess(),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius:

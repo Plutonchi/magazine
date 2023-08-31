@@ -47,6 +47,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   google_sign_in: ^6.1.5
+  pinput: ^3.0.1
   shared_preferences: ^2.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
