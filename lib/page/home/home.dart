@@ -10,6 +10,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final focusNode = FocusNode();
+
   String location = 'Osh';
   final locationName = [
     'Osh',
@@ -20,20 +21,24 @@ class _HomePageState extends State<HomePage> {
     'Chyu',
     'Issik-Kul',
   ];
+  List<Map> categories = [
+    {'name': 'All', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'My', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'Anxious', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'Kids', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'Sleep', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'All', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'My', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'Anxious', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'Kids', 'iconPath': 'assets/images/apple.png'},
+    {'name': 'Sleep', 'iconPath': 'assets/images/apple.png'},
+  ];
   @override
   Widget build(BuildContext context) {
-    List<Map> categories = [
-      {'name': 'All', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'My', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'Anxious', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'Kids', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'Sleep', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'All', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'My', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'Anxious', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'Kids', 'iconPath': 'assets/images/apple.png'},
-      {'name': 'Sleep', 'iconPath': 'assets/images/apple.png'},
-    ];
+    final Brightness? brightness = MediaQuery.of(context).platformBrightness;
+
+    final Color dropdownBackgroundColor =
+        brightness == Brightness.dark ? Color(0xFF181C2E) : Colors.white;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -79,6 +84,8 @@ class _HomePageState extends State<HomePage> {
                   height: 30,
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      dropdownColor: dropdownBackgroundColor,
+                      isExpanded: true,
                       focusColor: Colors.transparent,
                       items: locationName
                           .map(
@@ -154,6 +161,7 @@ class _HomePageState extends State<HomePage> {
                 height: 16,
               ),
               SearchBar(
+                controller: SearchController(),
                 focusNode: focusNode,
                 elevation: MaterialStateProperty.all(1),
                 hintText: 'Search product',
@@ -239,8 +247,20 @@ class _HomePageState extends State<HomePage> {
                               height: 122,
                               width: 122,
                               padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 4,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                               child: Image.asset(
                                 categories[index]['iconPath'],
                                 height: 81,
@@ -303,6 +323,7 @@ class _HomePageState extends State<HomePage> {
                 height: 21,
               ),
               ListView.builder(
+                primary: false,
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {
@@ -412,6 +433,9 @@ class _HomePageState extends State<HomePage> {
                               ],
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                       ],
                     ),
