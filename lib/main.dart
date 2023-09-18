@@ -1,35 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:magazine/page/page.dart';
+// import 'package:firebase_core/firebase_core.dart';
 
-import 'page/home/home.dart';
-
-void main() {
-  runApp(
-    const MyApp(),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       themeMode: ThemeMode.system,
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
-      ),
+          scaffoldBackgroundColor: Color(0xFF181C2E),
+          brightness: Brightness.dark,
+          textTheme: TextTheme()),
       theme: ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Color(0xff0C222F),
-        appBarTheme:
-            AppBarTheme(backgroundColor: Color(0xff0C222F), elevation: 0),
-        iconTheme: IconThemeData(
-          color: Colors.white,
-        ),
+        scaffoldBackgroundColor: Color(0xffffffff),
       ),
       debugShowCheckedModeBanner: false,
-      home: SpalshScreen(),
+      home: LoginPage(),
     );
   }
 }

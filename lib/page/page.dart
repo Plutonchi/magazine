@@ -1,2 +1,10 @@
 export 'spalsh/splash.dart';
 export 'home/home.dart';
+export 'onboarding/onboarding_page.dart';
+export 'auth/login/login_page.dart';
+export 'auth/signin/sign_in_page.dart';
+export 'auth/forgot/forgot_password.dart';
+export 'auth/location/location_access.dart';
+export 'auth/verification/verification.dart';
+export 'auth/widgets/register_text_widgets.dart';
+export 'auth/widgets/register_widgets.dart';

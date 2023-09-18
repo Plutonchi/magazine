@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "366669196040",
+    "project_id": "delevery-app-b8407",
+    "storage_bucket": "delevery-app-b8407.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:366669196040:android:8a1d005b537005cce35abd",
+        "android_client_info": {
+          "package_name": "com.example.magazine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "366669196040-ejkglp3mgfi9ecjckbfbprc4i2327m15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbgOvz2Gq6McfW42X_-b-ykDCZ--vjQXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "366669196040-ejkglp3mgfi9ecjckbfbprc4i2327m15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
