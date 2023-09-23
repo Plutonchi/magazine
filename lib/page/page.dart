@@ -8,3 +8,4 @@ export 'auth/location/location_access.dart';
 export 'auth/verification/verification.dart';
 export 'auth/widgets/register_text_widgets.dart';
 export 'auth/widgets/register_widgets.dart';
+export 'category/category_page.dart';
