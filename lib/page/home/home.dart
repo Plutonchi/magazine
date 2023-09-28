@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:magazine/page/page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,7 +10,50 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final focusNode = FocusNode();
+  var allItems = List.generate(50, (index) => 'item $index');
+  var items = [];
+  var searHistory = [];
+  final TextEditingController searchController = TextEditingController();
+  final SearchController controller = SearchController();
+  @override
+  void initState() {
+    searchController.addListener(queryListener);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(queryListener);
+    searchController.dispose();
+    controller.removeListener(searchListener);
+    controller.dispose();
+    super.dispose();
+  }
+
+  void queryListener() {
+    search(searchController.text);
+  }
+
+  void searchListener() {
+    search(controller.text);
+  }
+
+  void search(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        items = allItems;
+      });
+    } else {
+      setState(() {
+        items = allItems
+            .where(
+              (e) => e.toLowerCase().contains(
+                    query.toLowerCase(),
+                  ),
+            )
+            .toList();
+      });
+    }
+  }
 
   String location = 'Osh';
   final locationName = [
@@ -23,15 +67,6 @@ class _HomePageState extends State<HomePage> {
   ];
   List<Map> categories = [
     {'name': 'All', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'My', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'Anxious', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'Kids', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'Sleep', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'All', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'My', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'Anxious', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'Kids', 'iconPath': 'assets/images/apple.png'},
-    {'name': 'Sleep', 'iconPath': 'assets/images/apple.png'},
   ];
   @override
   Widget build(BuildContext context) {
@@ -84,6 +119,7 @@ class _HomePageState extends State<HomePage> {
                   height: 30,
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
+                      borderRadius: BorderRadius.circular(10),
                       dropdownColor: dropdownBackgroundColor,
                       isExpanded: true,
                       focusColor: Colors.transparent,
@@ -160,36 +196,98 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 16,
               ),
-              SearchBar(
-                controller: SearchController(),
-                focusNode: focusNode,
-                elevation: MaterialStateProperty.all(1),
-                hintText: 'Search product',
-                hintStyle: MaterialStateProperty.all(
-                    const TextStyle(color: Colors.grey)),
-                textStyle: MaterialStateProperty.all(
-                  const TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'SenRegular',
-                    color: Color(0xFF1E1D1D),
+              SearchAnchor(
+                searchController: controller,
+                viewHintText: 'Search...',
+                viewTrailing: [
+                  IconButton(
+                    onPressed: () {
+                      searHistory.add(controller.text);
+                      searHistory = searHistory.reversed.toSet().toList();
+                      controller.closeView(controller.text);
+                    },
+                    icon: Icon(Icons.search),
                   ),
-                ),
-                backgroundColor: MaterialStateProperty.all(
-                  const Color(0xFFF6F6F6),
-                ),
-                padding: const MaterialStatePropertyAll<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 16.0)),
-                leading: const Icon(
-                  Icons.search,
-                  color: Colors.black,
-                ),
-                onChanged: (String value) {
-                  print('value: $value');
+                  IconButton(
+                    onPressed: () {
+                      controller.clear();
+                    },
+                    icon: Icon(Icons.clear),
+                  ),
+                ],
+                builder: (context, controller) {
+                  return SearchBar(
+                    controller: controller,
+                    elevation: MaterialStateProperty.all(1),
+                    hintText: 'Search product',
+                    hintStyle: MaterialStateProperty.all(
+                        const TextStyle(color: Colors.grey)),
+                    textStyle: MaterialStateProperty.all(
+                      const TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'SenRegular',
+                        color: Color(0xFF1E1D1D),
+                      ),
+                    ),
+                    backgroundColor: MaterialStateProperty.all(
+                      const Color(0xFFF6F6F6),
+                    ),
+                    padding: const MaterialStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.symmetric(horizontal: 16.0)),
+                    leading: const Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
+                    onTap: () {
+                      controller
+                          .openView(); // The code below only works with SearchAnchor
+                    },
+                  );
                 },
-                onTap: () {
-                  print(
-                      'tapped'); // The code below only works with SearchAnchor
-                  // _searchController.openView();
+                suggestionsBuilder: (context, controller) {
+                  return [
+                    Wrap(
+                      children: List.generate(searHistory.length, (index) {
+                        final item = searHistory[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 4, right: 4),
+                          child: ChoiceChip(
+                              label: Text(item),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
+                              onSelected: (v) {
+                                search(item);
+                                controller.closeView(item);
+                              },
+                              selected: item == controller.text),
+                        );
+                      }),
+                    ),
+                    if (controller.text.isNotEmpty) ...[
+                      const Divider(),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          return Card(
+                            child: Column(
+                              children: [
+                                Text('Name : $item'),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                Text(item),
+                              ],
+                            ),
+                          );
+                        },
+                      )
+                    ]
+                  ];
                 },
               ),
               SizedBox(
@@ -240,46 +338,57 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 122,
-                              width: 122,
-                              padding: EdgeInsets.all(10),
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 4,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Image.asset(
-                                categories[index]['iconPath'],
-                                height: 81,
-                                width: 96,
-                              ),
+                      return InkWell(
+                        onTap: () {
+                          print('Category');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CategoryPage(),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              categories[index]['name'],
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'SenRegular',
-                                fontWeight: FontWeight.w700,
+                          );
+                        },
+                        child: Container(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 122,
+                                width: 122,
+                                padding: EdgeInsets.all(10),
+                                margin: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 4,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Image.asset(
+                                  categories[index]['iconPath'],
+                                  height: 81,
+                                  width: 96,
+                                ),
                               ),
-                              textAlign: TextAlign.center,
-                            )
-                          ],
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                categories[index]['name'],
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'SenRegular',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                textAlign: TextAlign.center,
+                              )
+                            ],
+                          ),
                         ),
                       );
                     }),
@@ -339,11 +448,6 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        // Image.asset(
-                        //   'assets/images/onboarding/1.png',
-                        //   width: 332,
-                        //   height: 214,
-                        // ),
                         SizedBox(
                           height: 5,
                         ),
